@@ -25,6 +25,6 @@ Eigen::Matrix<float, n * uc, n * uc> buildinverseH(Eigen::Matrix<float, n * sc, 
 /// @param Tg Global Tg matrix
 /// @return Matrix F of the cost gradient
 template <int n, int sc, int ec, int uc>
-Eigen::Matrix<float, sc + n * ec, n * uc> buildF(Eigen::Matrix<float, n * sc, sc> &Ag, Eigen::Matrix<float, n * sc, n * sc> &Qg, Eigen::Matrix<float, n * sc, n * uc> &Bg, Eigen::Matrix<float, n * ec, n * sc> &Tg);
+Eigen::Matrix<float, n * uc, sc + n * ec> buildF(Eigen::Matrix<float, n * sc, sc> &Ag, Eigen::Matrix<float, n * sc, n * sc> &Qg, Eigen::Matrix<float, n * sc, n * uc> &Bg, Eigen::Matrix<float, n * ec, n * sc> &Tg);
 
 #endif

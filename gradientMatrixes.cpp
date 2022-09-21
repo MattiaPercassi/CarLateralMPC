@@ -9,7 +9,7 @@ Eigen::Matrix<float, n * uc, n * uc> buildinverseH(Eigen::Matrix<float, n * sc, 
 };
 
 template <int n, int sc, int ec, int uc>
-Eigen::Matrix<float, sc + n * ec, n * uc> buildF(Eigen::Matrix<float, n * sc, sc> &Ag, Eigen::Matrix<float, n * sc, n * sc> &Qg, Eigen::Matrix<float, n * sc, n * uc> &Bg, Eigen::Matrix<float, n * ec, n * sc> &Tg)
+Eigen::Matrix<float, n * uc, sc + n * ec> buildF(Eigen::Matrix<float, n * sc, sc> &Ag, Eigen::Matrix<float, n * sc, n * sc> &Qg, Eigen::Matrix<float, n * sc, n * uc> &Bg, Eigen::Matrix<float, n * ec, n * sc> &Tg)
 {
     Eigen::Matrix<float, sc + n * ec, n *uc> Ft = Eigen::Matrix<float, sc + n * ec, n * uc>::Zero();
     Ft.block(0, 0, sc, n * uc) = Ag.transpose() * Qg * Bg;
