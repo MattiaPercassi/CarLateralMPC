@@ -21,7 +21,8 @@ All integration of differential equations is done through the forward Euler meth
 The transformation of the system equations in state space system is meant to rewrite the problem in term of ODE equations only.
 
 -SIMULATION-
-The time of the simulation is set to a number of secods, based on which the trajectory vector will be generated and with it the main loop will proceed
+To solve linear algebra the library Eigen is used (https://eigen.tuxfamily.org/index.php?title=Main_Page).
+The time of the simulation is set to a number of secods, based on which the trajectory vector will be generated and with it the main loop will proceed.
 The simulation will proceed along the following logic
 
 - Initialize all quantities, matrixes and trajectory vector
