@@ -38,6 +38,50 @@ Eigen::Matrix<float, n * sc, n * uc> buildGlobalB(Eigen::Matrix<float, sc, sc> &
     {
         Bg.block(i * sc, i * uc, (n - i) * sc, uc) = Bgcol.block(0, 0, (n - i) * sc, uc);
     };
-
     return Bg;
-}
+};
+
+template <int n, int sc, int ec>
+Eigen::Matrix<float, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct)
+{
+    Eigen::Matrix<float, n * sc, n *sc> Qg = Eigen::Matrix<float, n * sc, n * sc>::Zero();
+    Eigen::Matrix<float, sc, sc> temp = Ct.transpose() * Q * Ct;
+    for (int i{0}; i < n; ++i)
+    {
+        if (i == n - 1)
+            Qg.block(i * sc, i * sc, sc, sc) = Ct.transpose() * S * Ct;
+        else
+        {
+            Qg.block(i * sc, i * sc, sc, sc) = temp;
+        }
+    }
+    return Qg;
+};
+
+template <int n, int sc, int ec>
+Eigen::Matrix<float, n * ec, n * sc> buildGlobalT(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct)
+{
+    Eigen::Matrix<float, n * ec, n *sc> Tg = Eigen::Matrix<float, n * ec, n * sc>::Zero();
+    Eigen::Matrix<float, ec, sc> temp = Q * Ct;
+    for (int i{0}; i < n; ++i)
+    {
+        if (i == n - 1)
+            Tg.block(i * ec, i * sc, ec, sc) = S * Ct;
+        else
+        {
+            Tg.block(i * ec, i * sc, ec, sc) = temp;
+        }
+    }
+    return Tg;
+};
+
+template <int n, int uc>
+Eigen::Matrix<float, n * uc, n * uc> buildGlobalR(Eigen::Matrix<float, uc, uc> &R)
+{
+    Eigen::Matrix<float, n * uc, n *uc> Rg = Eigen::Matrix<float, n * uc, n * uc>::Zero();
+    for (int i{0}; i < n; ++i)
+    {
+        Rg.block(i * uc, i * uc, uc, uc) = R;
+    }
+    return Rg;
+};

@@ -23,4 +23,34 @@ Eigen::Matrix<float, n * sc, sc> buildGlobalA(Eigen::Matrix<float, sc, sc> &At);
 template <int n, int sc, int uc>
 Eigen::Matrix<float, n * sc, n * uc> buildGlobalB(Eigen::Matrix<float, sc, sc> &At, Eigen::Matrix<float, sc, uc> &Bt);
 
+/// @brief Build global Q matrix
+/// @tparam n integration steps
+/// @tparam sc number of states
+/// @tparam ec length of error vector
+/// @param Q Weight matrix for error vectors
+/// @param S Weight matrix for last error vector
+/// @param Ct Augmented matrix of the discrete LTI
+/// @return Global Qg matrix
+template <int n, int sc, int ec>
+Eigen::Matrix<float, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct);
+
+/// @brief Build global T matrix
+/// @tparam n integration steps
+/// @tparam sc number of states
+/// @tparam ec length of error vector
+/// @param Q Weight matrix for error vectors
+/// @param S Weight matrix for last error vector
+/// @param Ct Augmented matrix of the discrete LTI
+/// @return Global Tg matrix
+template <int n, int sc, int ec>
+Eigen::Matrix<float, n * ec, n * sc> buildGlobalT(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct);
+
+/// @brief Build global R matrix
+/// @tparam n integration steps
+/// @tparam uc length of input vector
+/// @param R Weight matrix for inputs
+/// @return Global Rg matrix
+template <int n, int uc>
+Eigen::Matrix<float, n * uc, n * uc> buildGlobalR(Eigen::Matrix<float, uc, uc> &R);
+
 #endif
