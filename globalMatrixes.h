@@ -13,6 +13,8 @@
 template <int n, int sc>
 Eigen::Matrix<float, n * sc, sc> buildGlobalA(Eigen::Matrix<float, sc, sc> &At);
 
+Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> &At, int n);
+
 /// @brief Build global B matrix
 /// @tparam n integration steps
 /// @tparam sc number of states
