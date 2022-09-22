@@ -7,16 +7,16 @@
 /// @param Ad Matrix of the discrete LTI system
 /// @param Bd Matrix of the discrete LTI system
 /// @return Matrix At of the augmented discrete system
-Eigen::Matrix<float, 5, 5> augmentA(Eigen::Matrix<float, 4, 4> &Ad, Eigen::Matrix<float, 4, 1> &Bd);
+Eigen::MatrixXf augmentA(Eigen::MatrixXf &Ad, Eigen::MatrixXf &Bd);
 
 /// @brief Creates the Bt matrix of the augmented system
 /// @param Bd Matrix of the discrete LTI system
 /// @return Matrix Bt of the augmented discrete system
-Eigen::Matrix<float, 5, 1> augmentB(Eigen::Matrix<float, 4, 1> &Bd);
+Eigen::MatrixXf augmentB(Eigen::MatrixXf &Bd);
 
 /// @brief Creates the Ct output matrix of the augmented system
 /// @param Cd Matrix of the discrete LTI system
 /// @return Matrix Ct of the augmented discrete system
-Eigen::Matrix<float, 2, 5> augmentC(Eigen::Matrix<float, 2, 4> &Cd);
+Eigen::MatrixXf augmentC(Eigen::MatrixXf &Cd);
 
 #endif
