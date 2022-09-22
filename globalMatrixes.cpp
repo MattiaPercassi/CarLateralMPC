@@ -17,7 +17,7 @@ Eigen::Matrix<float, n * sc, sc> buildGlobalA(Eigen::Matrix<float, sc, sc> &At)
     return Ag;
 };
 
-Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> &At, int n)
+Eigen::MatrixXf buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> &At, int n)
 {
     int sc = At.rows();
     Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> Ag;
