@@ -25,6 +25,8 @@ Eigen::MatrixXf buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dyna
 template <int n, int sc, int uc>
 Eigen::Matrix<float, n * sc, n * uc> buildGlobalB(Eigen::Matrix<float, sc, sc> &At, Eigen::Matrix<float, sc, uc> &Bt);
 
+Eigen::MatrixXf buildGlobalBdyn(Eigen::MatrixXf &At, Eigen::MatrixXf &Bt, int n, int sc, int uc);
+
 /// @brief Build global Q matrix
 /// @tparam n integration steps
 /// @tparam sc number of states
@@ -35,6 +37,8 @@ Eigen::Matrix<float, n * sc, n * uc> buildGlobalB(Eigen::Matrix<float, sc, sc> &
 /// @return Global Qg matrix
 template <int n, int sc, int ec>
 Eigen::Matrix<float, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct);
+
+Eigen::MatrixXf buildGlobalQdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::MatrixXf &Ct, int n, int sc, int ec);
 
 /// @brief Build global T matrix
 /// @tparam n integration steps
@@ -47,6 +51,8 @@ Eigen::Matrix<float, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<float, ec, ec> &
 template <int n, int sc, int ec>
 Eigen::Matrix<float, n * ec, n * sc> buildGlobalT(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct);
 
+Eigen::MatrixXf buildGlobalTdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::MatrixXf &Ct, int n, int sc, int ec);
+
 /// @brief Build global R matrix
 /// @tparam n integration steps
 /// @tparam uc length of input vector
@@ -54,5 +60,7 @@ Eigen::Matrix<float, n * ec, n * sc> buildGlobalT(Eigen::Matrix<float, ec, ec> &
 /// @return Global Rg matrix
 template <int n, int uc>
 Eigen::Matrix<float, n * uc, n * uc> buildGlobalR(Eigen::Matrix<float, uc, uc> &R);
+
+Eigen::MatrixXf buildGlobalRdyn(Eigen::MatrixXf &R, int n, int uc);
 
 #endif
