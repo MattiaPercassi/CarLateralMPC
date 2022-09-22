@@ -16,4 +16,6 @@
 template <int n, int sc, int ec, int uc>
 Eigen::Matrix<float, n * uc, 1> calculateOptInputs(Eigen::Matrix<float, n * uc, n * uc> &invH, Eigen::Matrix<float, n * uc, sc + n * ec> &F, Eigen::Matrix<float, sc, 1> &xk, Eigen::Matrix<float, ec * n, 1> &refg);
 
+Eigen::MatrixXf calculateOptInputsdyn(Eigen::MatrixXf &invH, Eigen::MatrixXf &F, Eigen::MatrixXf &xk, Eigen::MatrixXf &refg, int n, int sc, int ec);
+
 #endif
