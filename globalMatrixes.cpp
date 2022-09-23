@@ -2,12 +2,12 @@
 #include "globalMatrixes.h"
 
 template <int n, int sc>
-Eigen::Matrix<float, n * sc, sc> buildGlobalA(Eigen::Matrix<float, sc, sc> &At)
+Eigen::Matrix<double, n * sc, sc> buildGlobalA(Eigen::Matrix<double, sc, sc> &At)
 {
-    Eigen::Matrix<float, n * sc, sc> Ag = Eigen::Matrix<float, n * sc, sc>::Zero();
+    Eigen::Matrix<double, n * sc, sc> Ag = Eigen::Matrix<double, n * sc, sc>::Zero();
     for (int i{0}; i < n; ++i)
     {
-        Eigen::Matrix<float, sc, sc> temp = At;
+        Eigen::Matrix<double, sc, sc> temp = At;
         for (int j{0}; j < i; ++j)
         {
             temp *= temp;
@@ -17,16 +17,16 @@ Eigen::Matrix<float, n * sc, sc> buildGlobalA(Eigen::Matrix<float, sc, sc> &At)
     return Ag;
 };
 
-Eigen::MatrixXf buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> &At, const int n)
+Eigen::MatrixXd buildGlobalAdyn(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> &At, const int n)
 {
     const int sc = At.rows();
-    Eigen::MatrixXf Ag = Eigen::MatrixXf::Zero(n * sc, sc);
+    Eigen::MatrixXd Ag = Eigen::MatrixXd::Zero(n * sc, sc);
     for (int i{0}; i < n; ++i)
     {
         auto temp = At;
         for (int j{0}; j < i; ++j)
         {
-            temp *= temp;
+            temp *= At;
         }
         Ag.block(i * sc, 0, sc, sc) = temp;
     }
@@ -34,14 +34,14 @@ Eigen::MatrixXf buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dyna
 };
 
 template <int n, int sc, int uc>
-Eigen::Matrix<float, n * sc, n * uc> buildGlobalB(Eigen::Matrix<float, sc, sc> &At, Eigen::Matrix<float, sc, uc> &Bt)
+Eigen::Matrix<double, n * sc, n * uc> buildGlobalB(Eigen::Matrix<double, sc, sc> &At, Eigen::Matrix<double, sc, uc> &Bt)
 {
-    Eigen::Matrix<float, n * sc, n *uc> Bg = Eigen::Matrix<float, n * sc, n * uc>::Zero();
+    Eigen::Matrix<double, n * sc, n *uc> Bg = Eigen::Matrix<double, n * sc, n * uc>::Zero();
     // build longest matrix of the "first column" of Bg
-    Eigen::Matrix<float, n * sc, uc> Bgcol;
+    Eigen::Matrix<double, n * sc, uc> Bgcol;
     for (int i{0}; i < n; ++i)
     {
-        Eigen::Matrix<float, sc, uc> temp = Bt;
+        Eigen::Matrix<double, sc, uc> temp = Bt;
         for (int j{0}; j < i; ++j)
         {
             temp = At * temp;
@@ -57,10 +57,10 @@ Eigen::Matrix<float, n * sc, n * uc> buildGlobalB(Eigen::Matrix<float, sc, sc> &
     return Bg;
 };
 
-Eigen::MatrixXf buildGlobalBdyn(Eigen::MatrixXf &At, Eigen::MatrixXf &Bt, int n, int sc, int uc)
+Eigen::MatrixXd buildGlobalBdyn(Eigen::MatrixXd &At, Eigen::MatrixXd &Bt, int n, int sc, int uc)
 {
-    Eigen::MatrixXf Bg = Eigen::MatrixXf::Zero(n * sc, n * uc);
-    Eigen::MatrixXf Bgcol = Eigen::MatrixXf::Zero(n * sc, uc);
+    Eigen::MatrixXd Bg = Eigen::MatrixXd::Zero(n * sc, n * uc);
+    Eigen::MatrixXd Bgcol = Eigen::MatrixXd::Zero(n * sc, uc);
     for (int i{0}; i < n; ++i)
     {
         auto temp = Bt;
@@ -80,10 +80,10 @@ Eigen::MatrixXf buildGlobalBdyn(Eigen::MatrixXf &At, Eigen::MatrixXf &Bt, int n,
 };
 
 template <int n, int sc, int ec>
-Eigen::Matrix<float, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct)
+Eigen::Matrix<double, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<double, ec, ec> &Q, Eigen::Matrix<double, ec, ec> &S, Eigen::Matrix<double, ec, sc> &Ct)
 {
-    Eigen::Matrix<float, n * sc, n *sc> Qg = Eigen::Matrix<float, n * sc, n * sc>::Zero();
-    Eigen::Matrix<float, sc, sc> temp = Ct.transpose() * Q * Ct;
+    Eigen::Matrix<double, n * sc, n *sc> Qg = Eigen::Matrix<double, n * sc, n * sc>::Zero();
+    Eigen::Matrix<double, sc, sc> temp = Ct.transpose() * Q * Ct;
     for (int i{0}; i < n; ++i)
     {
         if (i == n - 1)
@@ -96,9 +96,9 @@ Eigen::Matrix<float, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<float, ec, ec> &
     return Qg;
 };
 
-Eigen::MatrixXf buildGlobalQdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::MatrixXf &Ct, int n, int sc, int ec)
+Eigen::MatrixXd buildGlobalQdyn(Eigen::MatrixXd &Q, Eigen::MatrixXd &S, Eigen::MatrixXd &Ct, int n, int sc, int ec)
 {
-    Eigen::MatrixXf Qg = Eigen::MatrixXf::Zero(n * sc, n * sc);
+    Eigen::MatrixXd Qg = Eigen::MatrixXd::Zero(n * sc, n * sc);
     auto temp = Ct.transpose() * Q * Ct;
     for (int i{0}; i < n; ++i)
     {
@@ -113,10 +113,10 @@ Eigen::MatrixXf buildGlobalQdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::M
 };
 
 template <int n, int sc, int ec>
-Eigen::Matrix<float, n * ec, n * sc> buildGlobalT(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct)
+Eigen::Matrix<double, n * ec, n * sc> buildGlobalT(Eigen::Matrix<double, ec, ec> &Q, Eigen::Matrix<double, ec, ec> &S, Eigen::Matrix<double, ec, sc> &Ct)
 {
-    Eigen::Matrix<float, n * ec, n *sc> Tg = Eigen::Matrix<float, n * ec, n * sc>::Zero();
-    Eigen::Matrix<float, ec, sc> temp = Q * Ct;
+    Eigen::Matrix<double, n * ec, n *sc> Tg = Eigen::Matrix<double, n * ec, n * sc>::Zero();
+    Eigen::Matrix<double, ec, sc> temp = Q * Ct;
     for (int i{0}; i < n; ++i)
     {
         if (i == n - 1)
@@ -129,9 +129,9 @@ Eigen::Matrix<float, n * ec, n * sc> buildGlobalT(Eigen::Matrix<float, ec, ec> &
     return Tg;
 };
 
-Eigen::MatrixXf buildGlobalTdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::MatrixXf &Ct, int n, int sc, int ec)
+Eigen::MatrixXd buildGlobalTdyn(Eigen::MatrixXd &Q, Eigen::MatrixXd &S, Eigen::MatrixXd &Ct, int n, int sc, int ec)
 {
-    Eigen::MatrixXf Tg = Eigen::MatrixXf::Zero(n * ec, n * sc);
+    Eigen::MatrixXd Tg = Eigen::MatrixXd::Zero(n * ec, n * sc);
     auto temp = Q * Ct;
     for (int i{0}; i < n; ++i)
     {
@@ -146,9 +146,9 @@ Eigen::MatrixXf buildGlobalTdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::M
 };
 
 template <int n, int uc>
-Eigen::Matrix<float, n * uc, n * uc> buildGlobalR(Eigen::Matrix<float, uc, uc> &R)
+Eigen::Matrix<double, n * uc, n * uc> buildGlobalR(Eigen::Matrix<double, uc, uc> &R)
 {
-    Eigen::Matrix<float, n * uc, n *uc> Rg = Eigen::Matrix<float, n * uc, n * uc>::Zero();
+    Eigen::Matrix<double, n * uc, n *uc> Rg = Eigen::Matrix<double, n * uc, n * uc>::Zero();
     for (int i{0}; i < n; ++i)
     {
         Rg.block(i * uc, i * uc, uc, uc) = R;
@@ -156,9 +156,9 @@ Eigen::Matrix<float, n * uc, n * uc> buildGlobalR(Eigen::Matrix<float, uc, uc> &
     return Rg;
 };
 
-Eigen::MatrixXf buildGlobalRdyn(Eigen::MatrixXf &R, int n, int uc)
+Eigen::MatrixXd buildGlobalRdyn(Eigen::MatrixXd &R, int n, int uc)
 {
-    Eigen::MatrixXf Rg = Eigen::MatrixXf::Zero(n * uc, n * uc);
+    Eigen::MatrixXd Rg = Eigen::MatrixXd::Zero(n * uc, n * uc);
     for (int i{0}; i < n; ++i)
     {
         Rg.block(i * uc, i * uc, uc, uc) = R;

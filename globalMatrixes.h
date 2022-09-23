@@ -11,9 +11,9 @@
 /// @param At Augmented matrix of the LTI discrete
 /// @return Global Ag matrix
 template <int n, int sc>
-Eigen::Matrix<float, n * sc, sc> buildGlobalA(Eigen::Matrix<float, sc, sc> &At);
+Eigen::Matrix<double, n * sc, sc> buildGlobalA(Eigen::Matrix<double, sc, sc> &At);
 
-Eigen::MatrixXf buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> &At, int n);
+Eigen::MatrixXd buildGlobalAdyn(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic> &At, int n);
 
 /// @brief Build global B matrix
 /// @tparam n integration steps
@@ -23,9 +23,9 @@ Eigen::MatrixXf buildGlobalAdyn(Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dyna
 /// @param Bt Augmented matrix of the LTI discrete
 /// @return Global Bg matrix
 template <int n, int sc, int uc>
-Eigen::Matrix<float, n * sc, n * uc> buildGlobalB(Eigen::Matrix<float, sc, sc> &At, Eigen::Matrix<float, sc, uc> &Bt);
+Eigen::Matrix<double, n * sc, n * uc> buildGlobalB(Eigen::Matrix<double, sc, sc> &At, Eigen::Matrix<double, sc, uc> &Bt);
 
-Eigen::MatrixXf buildGlobalBdyn(Eigen::MatrixXf &At, Eigen::MatrixXf &Bt, int n, int sc, int uc);
+Eigen::MatrixXd buildGlobalBdyn(Eigen::MatrixXd &At, Eigen::MatrixXd &Bt, int n, int sc, int uc);
 
 /// @brief Build global Q matrix
 /// @tparam n integration steps
@@ -36,9 +36,9 @@ Eigen::MatrixXf buildGlobalBdyn(Eigen::MatrixXf &At, Eigen::MatrixXf &Bt, int n,
 /// @param Ct Augmented matrix of the discrete LTI
 /// @return Global Qg matrix
 template <int n, int sc, int ec>
-Eigen::Matrix<float, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct);
+Eigen::Matrix<double, n * sc, n * sc> buildGlobalQ(Eigen::Matrix<double, ec, ec> &Q, Eigen::Matrix<double, ec, ec> &S, Eigen::Matrix<double, ec, sc> &Ct);
 
-Eigen::MatrixXf buildGlobalQdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::MatrixXf &Ct, int n, int sc, int ec);
+Eigen::MatrixXd buildGlobalQdyn(Eigen::MatrixXd &Q, Eigen::MatrixXd &S, Eigen::MatrixXd &Ct, int n, int sc, int ec);
 
 /// @brief Build global T matrix
 /// @tparam n integration steps
@@ -49,9 +49,9 @@ Eigen::MatrixXf buildGlobalQdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::M
 /// @param Ct Augmented matrix of the discrete LTI
 /// @return Global Tg matrix
 template <int n, int sc, int ec>
-Eigen::Matrix<float, n * ec, n * sc> buildGlobalT(Eigen::Matrix<float, ec, ec> &Q, Eigen::Matrix<float, ec, ec> &S, Eigen::Matrix<float, ec, sc> &Ct);
+Eigen::Matrix<double, n * ec, n * sc> buildGlobalT(Eigen::Matrix<double, ec, ec> &Q, Eigen::Matrix<double, ec, ec> &S, Eigen::Matrix<double, ec, sc> &Ct);
 
-Eigen::MatrixXf buildGlobalTdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::MatrixXf &Ct, int n, int sc, int ec);
+Eigen::MatrixXd buildGlobalTdyn(Eigen::MatrixXd &Q, Eigen::MatrixXd &S, Eigen::MatrixXd &Ct, int n, int sc, int ec);
 
 /// @brief Build global R matrix
 /// @tparam n integration steps
@@ -59,8 +59,8 @@ Eigen::MatrixXf buildGlobalTdyn(Eigen::MatrixXf &Q, Eigen::MatrixXf &S, Eigen::M
 /// @param R Weight matrix for inputs
 /// @return Global Rg matrix
 template <int n, int uc>
-Eigen::Matrix<float, n * uc, n * uc> buildGlobalR(Eigen::Matrix<float, uc, uc> &R);
+Eigen::Matrix<double, n * uc, n * uc> buildGlobalR(Eigen::Matrix<double, uc, uc> &R);
 
-Eigen::MatrixXf buildGlobalRdyn(Eigen::MatrixXf &R, int n, int uc);
+Eigen::MatrixXd buildGlobalRdyn(Eigen::MatrixXd &R, int n, int uc);
 
 #endif
