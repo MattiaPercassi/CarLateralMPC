@@ -1,7 +1,7 @@
 #include <cmath>
 #include <eigen/Eigen/Dense>
 #include "trajectoryGen.h"
-Eigen::MatrixXd atanTraj(double steps, int ec, double xd, double h, double Ys, double Ye)
+Eigen::MatrixXd tanhTraj(double steps, int ec, double xd, double h, double Ys, double Ye)
 {
     Eigen::MatrixXd ref = Eigen::MatrixXd::Zero(steps * ec, 1);
     // y reference

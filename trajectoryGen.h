@@ -11,6 +11,6 @@
 /// @param Ys initial value of Y
 /// @param Ye final value of Y
 /// @return reference trajectory for psi and Y
-Eigen::MatrixXd atanTraj(double steps, int ec, double xd, double h, double Ys, double Ye);
+Eigen::MatrixXd tanhTraj(double steps, int ec, double xd, double h, double Ys, double Ye);
 
 #endif
