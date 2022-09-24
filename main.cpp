@@ -36,7 +36,10 @@ int main()
     // initialization input vector
     Eigen::MatrixXd ug = Eigen::MatrixXd::Zero(n * uc, 1);
     // initialization reference, reference vector is extended after hte ned of the simulation time samples for allowing definiton of refg until the last simulation step
-    Eigen::MatrixXd ref = tanhTraj(simTime / h + n * sc, ec, xd, h, 2, 10);
+    //[TANH]
+    // Eigen::MatrixXd ref = tanhTraj(simTime / h + n * sc, ec, xd, h, 2, 10);
+    //[SIN]
+    Eigen::MatrixXd ref = sinTraj(simTime / h + n * sc, ec, xd, h, 3);
     Eigen::MatrixXd refg = Eigen::MatrixXd::Zero(n * ec, 1);
 
     // matrix constants
