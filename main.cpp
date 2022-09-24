@@ -7,6 +7,7 @@
 #include "gradientMatrixes.h"
 #include "solveOpt.h"
 #include "openLoop.h"
+#include "trajectoryGen.h"
 
 int main()
 {
@@ -35,15 +36,9 @@ int main()
     // initialization input vector
     Eigen::MatrixXd ug = Eigen::MatrixXd::Zero(n * uc, 1);
     // initialization reference, reference vector is extended after hte ned of the simulation time samples for allowing definiton of refg until the last simulation step
-    Eigen::MatrixXd ref = Eigen::MatrixXd::Zero(ec * n + ec * (simTime / h), 1);
+    Eigen::MatrixXd ref = atanTraj(simTime / h + n * sc, ec, xd, h, 2, 10);
     Eigen::MatrixXd refg = Eigen::MatrixXd::Zero(n * ec, 1);
 
-    // straight trajectory at Y = 10
-    for (int i{0}; i < ref.rows(); ++i)
-    {
-        if (i & 1)
-            ref(i, 0) = 5;
-    };
     // matrix constants
     double a1 = -2 / (j * xd) * (caf * lf * lf + car * lr * lr);
     double a2 = 2 / (j * xd) * (-caf * lf + car * lr);
@@ -62,13 +57,13 @@ int main()
     C << 0, 0, 1, 0, 0, 0, 0, 1;
     // Build matrix Q
     Eigen::MatrixXd Q = Eigen::MatrixXd::Zero(2, 2);
-    Q << 1, 0, 0, 1;
+    Q << 100, 0, 0, 1;
     // Build matrix S
     Eigen::MatrixXd S = Eigen::MatrixXd::Zero(2, 2);
-    S << 1, 0, 0, 1;
+    S << 300, 0, 0, 30;
     // Build matrix R
     Eigen::MatrixXd R = Eigen::MatrixXd::Zero(uc, uc);
-    R << 1;
+    R << 200;
 
     // discretize
     auto Ad = discretizeA(A, h);
@@ -117,7 +112,7 @@ int main()
         xk.block(0, 0, 4, 1) = Ad * xk.block(0, 0, 4, 1) + Bd * delta;
         yk = Ct * xk;
         // write to file
-        file << yk(0, 0) << "," << yk(1, 0) << "," << i * h << std::endl;
+        file << yk(0, 0) << "," << refg(0, 0) << "," << yk(1, 0) << "," << refg(1, 0) << "," << i * h << std::endl;
     };
     file.close();
     return 0;
