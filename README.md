@@ -39,3 +39,4 @@ The simulation will proceed along the following logic
 A simple python script using matplotlib will be used to plot the various states with respect to time and analyze the results
 
 ![XY](XYplane.png)
+![Yaw](yawAngle.png)
