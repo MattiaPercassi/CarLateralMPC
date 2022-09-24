@@ -42,14 +42,21 @@ int main()
     for (int i{0}; i < ref.rows(); ++i)
     {
         if (i & 1)
-            ref(i, 0) = 1;
+            ref(i, 0) = 5;
     };
+    // matrix constants
+    double a1 = -2 / (j * xd) * (caf * lf * lf + car * lr * lr);
+    double a2 = 2 / (j * xd) * (-caf * lf + car * lr);
+    double a3 = -xd - (2 / (m * xd) * (caf * lf - car * lr));
+    double a4 = -2 / (m * xd) * (caf + car);
+    double b1 = 2 * caf * lf / j;
+    double b2 = 2 * caf / m;
     // build matrix A
     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(4, 4);
-    A << (-2 * lf * caf / xd + 2 * car * lr / xd) / j, (-2 * caf * lf * lf / xd - 2 * car * lr * lr / xd) / j, 0, 0, (-2 * caf / xd - 2 * car / xd) / m, (-m * xd - 2 * caf * lf / xd + 2 * car * lr / xd) / m, 0, 0, 1, 0, 0, 0, 0, 1, xd, 0;
+    A << a1, a2, 0, 0, a3, a4, 0, 0, 1, 0, 0, 0, 0, 1, xd, 0;
     // build matrix B
     Eigen::MatrixXd B = Eigen::MatrixXd::Zero(4, 1);
-    B << 2 * caf * lf / j, 2 * caf / m, 0, 0;
+    B << b1, b2, 0, 0;
     // build matrix C
     Eigen::MatrixXd C = Eigen::MatrixXd::Zero(2, 4);
     C << 0, 0, 1, 0, 0, 0, 0, 1;
@@ -105,18 +112,22 @@ int main()
               << invH << std::endl;
     std::cout << "F(" << F.rows() << "," << F.cols() << ") " << '\n'
               << F << std::endl;
-
     // steering angle
     double delta{0};
-
+    std::ofstream file{"simRes.txt"};
+    if (!file)
+    {
+        std::cout << "Could not open file" << std::endl;
+        return 1;
+    }
     for (int i{0}; i < simTime / h; ++i)
     {
         refg = ref.block(i * ec, 0, n * ec, 1);
-        Eigen::MatrixXd error = yk - ref.block(i * ec, 0, ec, 1);
-        std::cout << "Error: " << error.transpose() << std::endl;
+        Eigen::MatrixXd error = ref.block(i * ec, 0, ec, 1) - yk;
         ug = calculateOptInputsdyn(invH, F, xk, refg, n, sc, ec);
         std::cout << "Iteration " << i << ": " << std::endl;
-        std::cout << "States (psid, yd, psi, Y, uk-1): " << xk.transpose() << std::endl;
+        std::cout << "Error: " << error.transpose() << std::endl;
+        std::cout << "States (yd, psid, psi, Y, uk-1): " << xk.transpose() << std::endl;
         std::cout << "Optimal control inputs (Ddelta): " << ug.transpose() << std::endl;
         // should I apply a control here on the Ddelta??
         delta += ug(0, 0);
@@ -133,7 +144,8 @@ int main()
         yk = Ct * xk;
         std::cout << "Outputs (psi, Y): " << yk.transpose() << std::endl;
         // write to file
+        file << yk(0, 0) << "," << yk(1, 0) << "," << i * h << std::endl;
     };
-
+    file.close();
     return 0;
 };
