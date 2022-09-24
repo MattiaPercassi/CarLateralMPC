@@ -14,8 +14,8 @@
 /// @param refg reference global vector for the next n steps
 /// @return input vector
 template <int n, int sc, int ec, int uc>
-Eigen::Matrix<float, n * uc, 1> calculateOptInputs(Eigen::Matrix<float, n * uc, n * uc> &invH, Eigen::Matrix<float, n * uc, sc + n * ec> &F, Eigen::Matrix<float, sc, 1> &xk, Eigen::Matrix<float, ec * n, 1> &refg);
+Eigen::Matrix<double, n * uc, 1> calculateOptInputs(Eigen::Matrix<double, n * uc, n * uc> &invH, Eigen::Matrix<double, n * uc, sc + n * ec> &F, Eigen::Matrix<double, sc, 1> &xk, Eigen::Matrix<double, ec * n, 1> &refg);
 
-Eigen::MatrixXf calculateOptInputsdyn(Eigen::MatrixXf &invH, Eigen::MatrixXf &F, Eigen::MatrixXf &xk, Eigen::MatrixXf &refg, int n, int sc, int ec);
+Eigen::MatrixXd calculateOptInputsdyn(Eigen::MatrixXd &invH, Eigen::MatrixXd &F, Eigen::MatrixXd &xk, Eigen::MatrixXd &refg, int n, int sc, int ec);
 
 #endif

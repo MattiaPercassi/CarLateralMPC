@@ -12,9 +12,9 @@
 /// @param Rg Global Rg matrix
 /// @return Matrix H^-1 of the cost gradient
 template <int n, int sc, int uc>
-Eigen::Matrix<float, n * uc, n * uc> buildinverseH(Eigen::Matrix<float, n * sc, n * uc> &Bg, Eigen::Matrix<float, n * sc, n * sc> &Qg, Eigen::Matrix<float, n * uc, n * uc> &Rg);
+Eigen::Matrix<double, n * uc, n * uc> buildinverseH(Eigen::Matrix<double, n * sc, n * uc> &Bg, Eigen::Matrix<double, n * sc, n * sc> &Qg, Eigen::Matrix<double, n * uc, n * uc> &Rg);
 
-Eigen::MatrixXf buildinverseHdyn(Eigen::MatrixXf &Bg, Eigen::MatrixXf &Qg, Eigen::MatrixXf &Rg);
+Eigen::MatrixXd buildinverseHdyn(Eigen::MatrixXd &Bg, Eigen::MatrixXd &Qg, Eigen::MatrixXd &Rg);
 
 /// @brief Build F matrix
 /// @tparam n integration steps
@@ -27,8 +27,8 @@ Eigen::MatrixXf buildinverseHdyn(Eigen::MatrixXf &Bg, Eigen::MatrixXf &Qg, Eigen
 /// @param Tg Global Tg matrix
 /// @return Matrix F of the cost gradient
 template <int n, int sc, int ec, int uc>
-Eigen::Matrix<float, n * uc, sc + n * ec> buildF(Eigen::Matrix<float, n * sc, sc> &Ag, Eigen::Matrix<float, n * sc, n * sc> &Qg, Eigen::Matrix<float, n * sc, n * uc> &Bg, Eigen::Matrix<float, n * ec, n * sc> &Tg);
+Eigen::Matrix<double, n * uc, sc + n * ec> buildF(Eigen::Matrix<double, n * sc, sc> &Ag, Eigen::Matrix<double, n * sc, n * sc> &Qg, Eigen::Matrix<double, n * sc, n * uc> &Bg, Eigen::Matrix<double, n * ec, n * sc> &Tg);
 
-Eigen::MatrixXf buildFdyn(Eigen::MatrixXf &Ag, Eigen::MatrixXf &Qg, Eigen::MatrixXf &Bg, Eigen::MatrixXf &Tg, int n, int sc, int ec, int uc);
+Eigen::MatrixXd buildFdyn(Eigen::MatrixXd &Ag, Eigen::MatrixXd &Qg, Eigen::MatrixXd &Bg, Eigen::MatrixXd &Tg, int n, int sc, int ec, int uc);
 
 #endif

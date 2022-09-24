@@ -1,15 +1,15 @@
 #include <eigen/Eigen/Dense>
 #include "discretizeLTI.h"
 
-Eigen::MatrixXf discretizeA(Eigen::MatrixXf &A, float h)
+Eigen::MatrixXd discretizeA(Eigen::MatrixXd &A, double h)
 {
-    Eigen::MatrixXf Ad = Eigen::Matrix<float, 4, 4>::Identity();
+    Eigen::MatrixXd Ad = Eigen::Matrix<double, 4, 4>::Identity();
     Ad += A * h;
     return Ad;
 };
 
-Eigen::MatrixXf discretizeB(Eigen::MatrixXf &B, float h)
+Eigen::MatrixXd discretizeB(Eigen::MatrixXd &B, double h)
 {
-    Eigen::MatrixXf Bd = B * h;
+    Eigen::MatrixXd Bd = B * h;
     return Bd;
 };

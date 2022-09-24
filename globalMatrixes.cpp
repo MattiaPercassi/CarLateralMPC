@@ -1,5 +1,6 @@
 #include <eigen/Eigen/Dense>
 #include "globalMatrixes.h"
+#include <iostream>
 
 template <int n, int sc>
 Eigen::Matrix<double, n * sc, sc> buildGlobalA(Eigen::Matrix<double, sc, sc> &At)
@@ -28,6 +29,8 @@ Eigen::MatrixXd buildGlobalAdyn(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dyn
         {
             temp *= At;
         }
+        std::cout << "Exponent " << i + 1 << '\n'
+                  << temp << std::endl;
         Ag.block(i * sc, 0, sc, sc) = temp;
     }
     return Ag;
