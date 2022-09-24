@@ -29,8 +29,6 @@ Eigen::MatrixXd buildGlobalAdyn(Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dyn
         {
             temp *= At;
         }
-        std::cout << "Exponent " << i + 1 << '\n'
-                  << temp << std::endl;
         Ag.block(i * sc, 0, sc, sc) = temp;
     }
     return Ag;

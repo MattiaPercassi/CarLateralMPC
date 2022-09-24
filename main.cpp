@@ -69,24 +69,16 @@ int main()
     // Build matrix R
     Eigen::MatrixXd R = Eigen::MatrixXd::Zero(uc, uc);
     R << 1;
-    std::cout << "A(" << A.rows() << "," << A.cols() << ") " << '\n'
-              << A << std::endl;
-    std::cout << "B(" << B.rows() << "," << B.cols() << ") " << '\n'
-              << B << std::endl;
 
     // discretize
     auto Ad = discretizeA(A, h);
     auto Bd = discretizeB(B, h);
     auto Cd = C;
-    std::cout << "Ad(" << Ad.rows() << "," << Ad.cols() << ") " << '\n'
-              << Ad << std::endl;
 
     // augment
     auto At = augmentA(Ad, Bd);
     auto Bt = augmentB(Bd);
     auto Ct = augmentC(Cd);
-    std::cout << "At(" << At.rows() << "," << At.cols() << ") " << '\n'
-              << At << std::endl;
 
     // global matrixes
     auto Ag = buildGlobalAdyn(At, n);
@@ -94,24 +86,10 @@ int main()
     auto Qg = buildGlobalQdyn(Q, S, Ct, n, sc, ec);
     auto Tg = buildGlobalTdyn(Q, S, Ct, n, sc, ec);
     auto Rg = buildGlobalRdyn(R, n, uc);
-    std::cout << "Ag(" << Ag.rows() << "," << Ag.cols() << ") " << '\n'
-              << Ag << std::endl;
-    std::cout << "Bg(" << Bg.rows() << "," << Bg.cols() << ") " << '\n'
-              << Bg << std::endl;
-    std::cout << "Qg(" << Qg.rows() << "," << Qg.cols() << ") " << '\n'
-              << Qg << std::endl;
-    std::cout << "Rg(" << Rg.rows() << "," << Rg.cols() << ") " << '\n'
-              << Rg << std::endl;
-    std::cout << "Tg(" << Tg.rows() << "," << Tg.cols() << ") " << '\n'
-              << Tg << std::endl;
 
     // gradient matrixes
     auto invH = buildinverseHdyn(Bg, Qg, Rg);
     auto F = buildFdyn(Ag, Qg, Bg, Tg, n, sc, ec, uc);
-    std::cout << "invH(" << invH.rows() << "," << invH.cols() << ") " << '\n'
-              << invH << std::endl;
-    std::cout << "F(" << F.rows() << "," << F.cols() << ") " << '\n'
-              << F << std::endl;
     // steering angle
     double delta{0};
     std::ofstream file{"simRes.txt"};
@@ -125,10 +103,6 @@ int main()
         refg = ref.block(i * ec, 0, n * ec, 1);
         Eigen::MatrixXd error = ref.block(i * ec, 0, ec, 1) - yk;
         ug = calculateOptInputsdyn(invH, F, xk, refg, n, sc, ec);
-        std::cout << "Iteration " << i << ": " << std::endl;
-        std::cout << "Error: " << error.transpose() << std::endl;
-        std::cout << "States (yd, psid, psi, Y, uk-1): " << xk.transpose() << std::endl;
-        std::cout << "Optimal control inputs (Ddelta): " << ug.transpose() << std::endl;
         // should I apply a control here on the Ddelta??
         delta += ug(0, 0);
         // delta must be constrained between the real available steering angles +- pi/6
@@ -142,7 +116,6 @@ int main()
         // For test purposes update the states with same refinement as controller sample frequency
         xk.block(0, 0, 4, 1) = Ad * xk.block(0, 0, 4, 1) + Bd * delta;
         yk = Ct * xk;
-        std::cout << "Outputs (psi, Y): " << yk.transpose() << std::endl;
         // write to file
         file << yk(0, 0) << "," << yk(1, 0) << "," << i * h << std::endl;
     };
