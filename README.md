@@ -41,9 +41,11 @@ A simple python script using matplotlib will be used to plot the various states 
 Here below results obtained with a tanh-like trajectory and a sin-like trajectory
 
 TANH
+
 ![XY](XYplane.png)
 ![Yaw](yawAngle.png)
 
 SINH
+
 ![XYs](XYplaneSin.png)
 ![Yaws](yawAngleSin.png)
