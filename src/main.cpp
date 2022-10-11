@@ -101,7 +101,6 @@ int main()
         refg = ref.block(i * ec, 0, n * ec, 1);
         Eigen::MatrixXd error = ref.block(i * ec, 0, ec, 1) - yk;
         ug = calculateOptInputsdyn(invH, F, xk, refg, n, sc, ec);
-        // should I apply a control here on the Ddelta??
         delta += ug(0, 0);
         // delta must be constrained between the real available steering angles +- pi/6
         if (delta < -pi / 6)
